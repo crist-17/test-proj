@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SportsPlex -메인 페이지</title>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ======================= HEADER ======================= */
+        header {
+            background: #fff;
+            border-bottom: 1px solid #ececec;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            height: 72px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #6b8afe;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            color: #444;
+            transition: 0.25s;
+        }
+
+        .nav-menu a:hover { color: #6b8afe; }
+
+        /* ======================= QUICK SEARCH (CGV 스타일) ======================= */
+        .quick-search-section {
+            background: #f7f7f7;
+            padding: 70px 0;
+        }
+
+        .quick-search-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 45px 55px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            border: 1px solid #e5e5e5;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .search-form select,
+        .search-form input {
+            padding: 16px 18px;
+            font-size: 16px;
+            background: #f4f4f4;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            transition: 0.25s;
+        }
+
+        .search-form select:hover,
+        .search-form input:hover {
+            background: #fff;
+            border-color: #6b8afe;
+        }
+
+        .search-btn {
+            grid-column: span 4;
+            padding: 18px;
+            font-size: 18px;
+            border: none;
+            font-weight: 700;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #6b8afe;
+            box-shadow: 0 3px 10px rgba(107,138,254,0.35);
+            transition: 0.25s;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-3px);
+            background: #5a7aed;
+        }
+
+        /* ======================= TODAY’S PICK (포스터 스타일) ======================= */
+        .todays-pick-section { background: #fff; padding: 70px 0; }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 45px;
+            color: #222;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+            gap: 28px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            transition: 0.25s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 14px 28px rgba(0,0,0,0.2);
+        }
+
+        .card-image {
+            height: 220px;
+            background: linear-gradient(135deg, #dfe5ff, #f6f6f6);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .card-content { padding: 22px; }
+        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+        .card-time { font-weight: 700; color: #6b8afe; }
+
+        /* ======================= MEMBER OF MONTH ======================= */
+        .member-section { padding: 70px 0; background: #f7f7f7; }
+
+        .carousel-container { max-width: 900px; margin: 0 auto; overflow: hidden; }
+
+        .carousel-wrapper {
+            display: flex;
+            gap: 20px;
+            transition: 0.3s;
+        }
+
+        .member-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .member-avatar {
+            width: 100px; height: 100px; border-radius: 50%;
+            background: #6b8afe;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 38px; color: #fff; margin: 0 auto 15px;
+        }
+
+        .member-name { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+
+        .member-description { font-size: 14px; color: #777; }
+
+        /* ======================= POPULAR PROGRAMS ======================= */
+        .popular-section { background: #fff; padding: 70px 0; }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+            gap: 28px;
+        }
+
+        .program-card {
+            background: #f7f7f7;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: 0.25s;
+        }
+
+        .program-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 26px rgba(0,0,0,0.15);
+        }
+
+        .program-image {
+            height: 200px;
+            background: linear-gradient(135deg,#d5e0ff,#f6f6f6);
+            display:flex; justify-content:center; align-items:center;
+        }
+
+        .program-content { padding: 20px; }
+        .program-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+
+        .program-tag {
+            background: #eef1ff;
+            color: #6b8afe;
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        /* ======================= BRANCHES ======================= */
+        .branch-section {
+            padding: 70px 0;
+            background: #f7f7f7;
+        }
+
+        .branch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+            gap: 28px;
+        }
+
+        .branch-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: 0.25s;
+        }
+
+        .branch-card:hover { transform: translateY(-6px); }
+
+        .branch-image {
+            height: 160px;
+            background: linear-gradient(135deg,#eaefff,#fafafa);
+            display:flex; justify-content:center; align-items:center;
+        }
+
+        .branch-content { padding: 20px; }
+        .branch-name { font-size: 19px; font-weight: 700; margin-bottom: 12px; }
+
+        .sport-badge {
+            background: #eef1ff; color:#6b8afe;
+            padding: 6px 12px; margin-right: 6px;
+            border-radius: 6px; font-size: 12px;
+            display:inline-block;
+        }
+
+        .branch-link {
+            display: inline-block;
+            margin-top: 14px;
+            color: #6b8afe;
+            font-weight: 700;
+            text-decoration:none;
+        }
+
+        /* ======================= EVENT BANNER ======================= */
+        .event-banner-section { background:#fff; padding: 60px 0; }
+
+        .event-banner {
+            background: linear-gradient(135deg,#eef1ff,#fbfbfb);
+            padding: 26px;
+            border-radius: 10px;
+            border-left: 4px solid #6b8afe;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            text-align:center;
+        }
+
+        .event-text { font-size: 16px; font-weight: 600; }
+        .event-highlight { color:#6b8afe; font-weight: 800; }
+
+        /* ======================= FOOTER ======================= */
+        footer {
+            padding: 70px 0 50px;
+            background:#fff;
+            border-top:1px solid #ececec;
+        }
+
+        .footer-top {
+            display:grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap:40px;
+            margin-bottom:35px;
+        }
+
+        .footer-section h3 { font-size:15px; font-weight:800; margin-bottom:14px; }
+
+        .footer-section a {
+            text-decoration:none;
+            color:#666;
+            font-size:13px;
+        }
+
+        .footer-section a:hover { color:#6b8afe; }
+
+        .footer-bottom {
+            margin-top:25px;
+            text-align:center;
+            font-size:13px;
+            color:#aaa;
+        }
+
+        @media(max-width:768px){
+            .footer-top { grid-template-columns:1fr; }
+            .search-form { grid-template-columns:1fr; }
+            .search-btn { grid-column: span 1; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container header-content">
+            <a class="logo" href="#">SportsPlex</a>
+            <ul class="nav-menu">
+                <li><a href="#branches">지점 안내</a></li>
+                <li><a href="#programs">종목 안내</a></li>
+                <li><a href="#reservation">예약하기</a></li>
+                <li><a href="#mypage">마이페이지</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- QUICK SEARCH -->
+    <section class="quick-search-section">
+        <div class="quick-search-box">
+            <form class="search-form" id="searchForm">
+                <select required>
+                    <option value="">지점 선택</option>
+                    <option>강남점</option>
+                    <option>강북점</option>
+                    <option>송파점</option>
+                    <option>마포점</option>
+                </select>
+
+                <select required>
+                    <option value="">종목 선택</option>
+                    <option>요가</option>
+                    <option>필라테스</option>
+                    <option>스핀</option>
+                    <option>줌바</option>
+                </select>
+
+                <input type="date" required />
+                <button class="search-btn">검색하기</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- TODAY PICK -->
+    <section class="todays-pick-section">
+        <div class="container">
+            <h2 class="section-title">오늘의 추천 운동</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-image">이미지 준비중</div>
+                    <div class="card-content">
+                        <div class="card-title">신나는 줌바</div>
+                        <div>매일 <span class="card-time">10:00 ~ 11:00</span></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">이미지 준비중</div>
+                    <div class="card-content">
+                        <div class="card-title">편안한 요가</div>
+                        <div>월/수/금 <span class="card-time">18:00 ~ 19:00</span></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">이미지 준비중</div>
+                    <div class="card-content">
+                        <div class="card-title">강렬한 복싱</div>
+                        <div>화/목/토 <span class="card-time">19:00 ~ 20:00</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEMBER -->
+    <section class="member-section">
+        <div class="container">
+            <h2 class="section-title">이달의 회원</h2>
+
+            <div class="carousel-container">
+                <div class="carousel-wrapper" id="carousel">
+                    <div class="member-card">
+                        <div class="member-avatar">K</div>
+                        <div class="member-name">김현정</div>
+                        <div class="member-description">요가 100일 달성! 꾸준함은 최고의 무기입니다.</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">L</div>
+                        <div class="member-name">이준호</div>
+                        <div class="member-description">필라테스로 자세 교정 성공!</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">P</div>
+                        <div class="member-name">박영미</div>
+                        <div class="member-description">복싱으로 스트레스 OUT!</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- POPULAR PROGRAMS -->
+    <section class="popular-section" id="programs">
+        <div class="container">
+            <h2 class="section-title">인기 프로그램</h2>
+
+            <div class="program-grid">
+                <div class="program-card">
+                    <div class="program-image">이미지 준비중</div>
+                    <div class="program-content">
+                        <div class="program-title">초급 요가</div>
+                        <span class="program-tag">초급</span>
+                        <span class="program-tag">60분</span>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-image">이미지 준비중</div>
+                    <div class="program-content">
+                        <div class="program-title">고급 필라테스</div>
+                        <span class="program-tag">고급</span>
+                        <span class="program-tag">50분</span>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-image">이미지 준비중</div>
+                    <div class="program-content">
+                        <div class="program-title">스핀 클래스</div>
+                        <span class="program-tag">중급</span>
+                        <span class="program-tag">45분</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRANCH -->
+    <section class="branch-section" id="branches">
+        <div class="container">
+            <h2 class="section-title">지점별 시설 안내</h2>
+
+            <div class="branch-grid">
+                <div class="branch-card">
+                    <div class="branch-image">이미지 준비중</div>
+                    <div class="branch-content">
+                        <div class="branch-name">강남점</div>
+                        <span class="sport-badge">요가</span>
+                        <span class="sport-badge">필라테스</span>
+                        <span class="sport-badge">스핀</span>
+                        <a class="branch-link" href="#">자세히 보기 →</a>
+                    </div>
+                </div>
+
+                <div class="branch-card">
+                    <div class="branch-image">이미지 준비중</div>
+                    <div class="branch-content">
+                        <div class="branch-name">강북점</div>
+                        <span class="sport-badge">복싱</span>
+                        <span class="sport-badge">줌바</span>
+                        <a class="branch-link" href="#">자세히 보기 →</a>
+                    </div>
+                </div>
+
+                <div class="branch-card">
+                    <div class="branch-image">이미지 준비중</div>
+                    <div class="branch-content">
+                        <div class="branch-name">송파점</div>
+                        <span class="sport-badge">요가</span>
+                        <span class="sport-badge">복싱</span>
+                        <span class="sport-badge">줌바</span>
+                        <a class="branch-link" href="#">자세히 보기 →</a>
+                    </div>
+                </div>
+
+                <div class="branch-card">
+                    <div class="branch-image">이미지 준비중</div>
+                    <div class="branch-content">
+                        <div class="branch-name">마포점</div>
+                        <span class="sport-badge">필라테스</span>
+                        <span class="sport-badge">스핀</span>
+                        <a class="branch-link" href="#">자세히 보기 →</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- EVENT -->
+    <section class="event-banner-section">
+        <div class="container">
+            <div class="event-banner">
+                <p class="event-text">
+                    <span class="event-highlight">🎉 신규 회원</span> 첫 달 50% 할인!  
+                    <span class="event-highlight">지금 등록하세요!</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-section">
+                    <h3>SportsPlex</h3>
+                    <p style="color:#777; font-size:14px;">스포츠센터 예약 플랫폼</p>
+                    <p style="color:#777; font-size:14px;">대표: 홍길동</p>
+                    <p style="color:#777; font-size:14px;">서울시 강남구 테헤란로 123</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>고객지원</h3>
+                    <a href="#">공지사항</a><br>
+                    <a href="#">FAQ</a><br>
+                    <a href="#">1:1 문의</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>지점 연락처</h3>
+                    <a>강남 02-123-4567</a><br>
+                    <a>강북 02-234-5678</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>정책</h3>
+                    <a href="#">이용약관</a><br>
+                    <a href="#">개인정보처리방침</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                © 2024 SportsPlex. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 검색 alert
+        document.getElementById("searchForm").addEventListener("submit", e => {
+            e.preventDefault();
+            alert("예약 검색 기능은 데모입니다.");
+        });
+    </script>
+</body>
+</html>
